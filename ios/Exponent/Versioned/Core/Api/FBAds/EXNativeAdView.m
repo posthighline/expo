@@ -11,19 +11,22 @@
 
 - (void)setNativeAd:(FBNativeAd *)nativeAd
 {
-  _nativeAd = nativeAd;
-
-  _onAdLoaded(@{
-    @"title": _nativeAd.title,
-    @"subtitle": _nativeAd.subtitle,
-    @"description": _nativeAd.body,
-    @"socialContext": _nativeAd.socialContext,
-    @"callToActionText": _nativeAd.callToAction,
-    @"coverImage": _nativeAd.coverImage ? [_nativeAd.coverImage.url absoluteString] : [NSNull null],
-    @"icon": _nativeAd.icon ? [_nativeAd.icon.url absoluteString] : [NSNull null],
-  });
-
-  [_nativeAd registerViewForInteraction:self withViewController:RCTKeyWindow().rootViewController];
+	_nativeAd = nativeAd;
+	
+	_onAdLoaded(@{
+				  @"title": _nativeAd.headline,
+				  @"subtitle": _nativeAd.linkDescription,
+				  @"description": _nativeAd.bodyText,
+				  @"socialContext": _nativeAd.socialContext,
+				  @"callToActionText": _nativeAd.callToAction,
+				  @"coverImage": _nativeAd.adChoicesIcon ? [_nativeAd.adChoicesIcon.url absoluteString] : [NSNull null],
+				  @"icon": _nativeAd.adChoicesIcon ? [_nativeAd.adChoicesIcon.url absoluteString] : [NSNull null],
+				  });
+	
+	[_nativeAd registerViewForInteraction:self
+								mediaView:[[FBMediaView alloc] init]
+								 iconView:nil
+						   viewController:RCTKeyWindow().rootViewController];
 }
 
 @end
